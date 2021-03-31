@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './MetaMask.css';
 import App from './App';
+import MetaMask from './Metamask'
 import reportWebVitals from './reportWebVitals';
 
 import 'tachyons';
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,6 +15,9 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+const mm = new MetaMask();
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
