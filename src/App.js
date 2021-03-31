@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        // Top navigation bar common to all pages
+        {/* Top navigation bar common to all pages */}
         <Navbar onRouteChange={this.onRouteChange} />
       </div>
     );
