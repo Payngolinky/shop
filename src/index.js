@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './MetaMask.css';
 import App from './App';
 import MetaMask from './Metamask'
 import reportWebVitals from './reportWebVitals';
