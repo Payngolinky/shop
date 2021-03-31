@@ -31,7 +31,7 @@ class App extends Component {
     return (
       <div className="App">
         {/* Top navigation bar common to all pages */}
-        <Navbar onRouteChange={this.onRouteChange} />
+        <Navbar route={this.state.route} onRouteChange={this.onRouteChange} />
       </div>
     );
   }
