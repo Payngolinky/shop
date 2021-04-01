@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Navbar from './components/Navbar/Navbar';
+import MerchantPage from './components/MerchantPage/MerchantPage';
 
 class App extends Component {
   /**
@@ -32,6 +33,12 @@ class App extends Component {
       <div className="App">
         {/* Top navigation bar common to all pages */}
         <Navbar route={this.state.route} onRouteChange={this.onRouteChange} />
+
+        {
+          this.state.route === 'merchant'
+          ? <MerchantPage />
+          : <div></div>
+        }
       </div>
     );
   }
