@@ -11,7 +11,7 @@ import React from 'react';
  */
 const ProductCard = ({id, name, price, image_url, desc}) => {
   return (
-    <article className="br2 ba dark-gray b--black-10 shadow-3 mv4 w-100 mw5 center">
+    <article className="link dim pointer br2 ba dark-gray b--black-10 shadow-3 mv4 w-100 mw5 center">
       <img
         src={image_url}
         className="db w-100 br2 br--top"
