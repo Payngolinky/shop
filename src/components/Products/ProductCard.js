@@ -17,7 +17,7 @@ const ProductCard = ({id, name, price, image_url, desc}) => {
         className="db w-100 br2 br--top"
         alt={"Product: " + name} />
 
-      <div className="pa2 ph3-ns pb3-ns">
+      <div className="pa2 ph3-ns h4 pb3-ns">
         <div className="dt w-100 mt1">
           <div className="dtc">
             <h1 className="f5 f4-ns mv0">{name}</h1>
