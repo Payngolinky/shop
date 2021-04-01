@@ -23,7 +23,7 @@ const ProductCard = ({id, name, price, image_url, desc}) => {
             <h1 className="f5 f4-ns mv0">{name}</h1>
           </div>
           <div className="dtc tr">
-            <h2 className="f5 mv0">{price} AVAX</h2>
+            <h2 className="f5 mv0">{Number(price).toFixed(3)} AVAX</h2>
           </div>
         </div>
 
