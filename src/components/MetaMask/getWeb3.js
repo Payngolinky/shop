@@ -1,4 +1,4 @@
-import Web3 from "web3";
+import Web3 from 'web3';
 
 /**
  * Connects Payngolinky dapp to (MetaMask) wallet. Code from truffle react box
@@ -13,10 +13,14 @@ const getWeb3 = () =>
         const web3 = new Web3(window.ethereum);
         try {
           // Request account access if needed
-          await window.ethereum.enable();
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+
           // Acccounts now exposed, can use web3 with MetaMask
           resolve(web3);
         } catch (error) {
+          if (error.code === 4001) {
+            console.error("User rejected Payngolinky request for access to MetaMask");
+          }
           reject(error);
         }
       }
