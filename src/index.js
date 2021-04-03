@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './MetaMask.css';
 import App from './App';
-import MetaMask from './Metamask'
 import Pangolin from './Pangolin'
 import reportWebVitals from './reportWebVitals';
 
@@ -17,7 +15,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-const mm = new MetaMask();
 const png = new Pangolin(mm);
 
 
