@@ -4,12 +4,12 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 
 // String constants for button text
 const ONBOARD_TEXT = 'Install MetaMask';
-const CONNECT_TEXT = 'Connect';
-const CONNECTED_TEXT = 'Connected';
+const CONNECT_TEXT = 'Connect MetaMask';
+const CONNECTED_TEXT = 'MetaMask Connected';
 
 /**
  * Defines onboarding button for installing or connecting MetaMask
- * @param {OnboardingButton~updateAccounts} updateAccounts Callback function to update accounts in parent component
+ * @param {OnboardingButton~updateAccounts} updateAccounts - Callback function to update accounts in parent component
  * @returns MetaMask installation/connection button in JSX
  * @description Code taken and modified from https://docs.metamask.io/guide/onboarding-library.html#using-react
  */
@@ -30,7 +30,6 @@ export function OnboardingButton({ updateAccounts }) {
       if (accounts.length > 0) {
         setButtonText(CONNECTED_TEXT);
         setDisabled(true);
-        updateAccounts(accounts);
         onboarding.current.stopOnboarding();
       } else {
         setButtonText(CONNECT_TEXT);
@@ -53,16 +52,13 @@ export function OnboardingButton({ updateAccounts }) {
         window.ethereum.off('accountsChanged', handleNewAccounts);
       };
     }
-  }, []);
+  }, [updateAccounts]);
 
   const onClick = () => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
-        .then((newAccounts) => {
-          setAccounts(newAccounts);
-          updateAccounts(newAccounts);
-        });
+        .then((newAccounts) => { setAccounts(newAccounts); });
     } else {
       onboarding.current.startOnboarding();
     }
@@ -73,7 +69,7 @@ export function OnboardingButton({ updateAccounts }) {
       <button
         disabled={isDisabled}
         onClick={onClick}
-        className="f5 f4-m f3-l tc grow no-underline br-pill ba bw1 ph3 pv2 dib black pointer">
+        className="f5 f4-m f3-l tc no-underline br-pill ba bw1 ph3 pv2 dib black pointer">
         {buttonText}
       </button>
     </section>
