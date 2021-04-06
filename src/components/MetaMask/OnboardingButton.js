@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { ethers } from 'ethers';
+import detectEthereumProvider from '@metamask/detect-provider';
 import MetaMaskOnboarding from '@metamask/onboarding';
 
 // String constants for button text
@@ -10,22 +12,23 @@ const CONNECTED_TEXT = 'MetaMask Connected';
 /**
  * Defines onboarding button for installing or connecting MetaMask
  * @param {OnboardingButton~updateAccounts} updateAccounts - Callback function to update accounts in parent component
+ * @param {OnboardingButton~updateProvider} updateProvider - Callback function to update provider in parent component
  * @returns MetaMask installation/connection button in JSX
  * @description Code taken and modified from https://docs.metamask.io/guide/onboarding-library.html#using-react
  */
-export function OnboardingButton({ updateAccounts }) {
-  const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT);
-  const [isDisabled, setDisabled] = React.useState(false);
-  const [accounts, setAccounts] = React.useState([]);
-  const onboarding = React.useRef();
+export function OnboardingButton({ updateAccounts, updateProvider }) {
+  const [buttonText, setButtonText] = useState(ONBOARD_TEXT);
+  const [isDisabled, setDisabled] = useState(false);
+  const [accounts, setAccounts] = useState([]);
+  const onboarding = useRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding();
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       if (accounts.length > 0) {
         setButtonText(CONNECTED_TEXT);
@@ -38,21 +41,49 @@ export function OnboardingButton({ updateAccounts }) {
     }
   }, [accounts]);
 
-  React.useEffect(() => {
-    function handleNewAccounts(newAccounts) {
+  useEffect(() => {
+    const handleNewAccounts = (newAccounts) => {
       setAccounts(newAccounts);
       updateAccounts(newAccounts);
-    }
+    };
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
-        .then(handleNewAccounts);
+        .then(handleNewAccounts)
+        .catch(console.error);
+      
       window.ethereum.on('accountsChanged', handleNewAccounts);
-      return () => {
+
+      /* return () => {
         window.ethereum.off('accountsChanged', handleNewAccounts);
-      };
+      }; */
     }
   }, [updateAccounts]);
+
+  /**
+   * Maintain func ref detecting MetaMask Ethereum provider and updating state
+   */
+  const handleProvider = useCallback(async () => {
+    const provider = await detectEthereumProvider();
+
+    if (provider) {
+      if (provider === window.ethereum) {
+        // Update state in parent component
+        updateProvider(new ethers.providers.Web3Provider(provider));
+        console.log("handleProvider successfully updated provider");
+      } else {
+        console.error("handleProvider possibly detected multiple wallets installed");
+      }
+    } else {
+      console.error("handleProvider encountered null provider");
+    }
+  }, [updateProvider]);
+
+  useEffect(() => {
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      handleProvider();
+    }
+  }, [handleProvider]);
 
   const onClick = () => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
