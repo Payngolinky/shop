@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ethers } from 'ethers';
 import detectEthereumProvider from '@metamask/detect-provider';
 import MetaMaskOnboarding from '@metamask/onboarding';
+import NetworkData from './NetworkData';
 
 // String constants for button text
 const ONBOARD_TEXT = 'Install MetaMask';
@@ -71,6 +72,21 @@ export function OnboardingButton({ updateAccounts, updateProvider }) {
         // Update state in parent component
         updateProvider(new ethers.providers.Web3Provider(provider));
         console.log("handleProvider successfully updated provider");
+
+        // If Avalanche test network is not available in MetaMask, add it
+        // Code taken from https://docs.avax.network/build/tutorials/smart-contracts/add-avalanche-to-metamask-programmatically
+        const chainId = await provider.request({ method: 'eth_chainId'});
+        if (chainId !== NetworkData.AVAX_CCHAIN_TESTNET_PARAMS.chainId) {
+          provider.request({
+            method: 'wallet_addEthereumChain',
+            params: [NetworkData.AVAX_CCHAIN_TESTNET_PARAMS]
+          })
+          .catch(console.error);
+
+          // Reload the page once chain is changed
+          // @todo Handle chain changes away from Avalanche test network
+          provider.on('chainChanged', (_chainId) => window.location.reload());
+        }
       } else {
         console.error("handleProvider possibly detected multiple wallets installed");
       }
