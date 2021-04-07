@@ -1,12 +1,21 @@
-class MetaMask {
+import React, { Component } from 'react';
+
+import { OnboardingButton } from './OnboardingButton';
+import MetaMaskDisplay from './MetaMaskDisplay';
+
+class MetaMask extends Component {
   /**
    * Metamask constructor initializes state variables
    * @constructor
    */
-
   constructor() {
-    console.log('MetaMask initializing...');
-    this.ethereumButton = document.querySelector('#MetaMaskButton');
+    super();
+    this.state = {
+      accounts: [],
+      provider: null
+    }
+
+    /* this.ethereumButton = document.querySelector('#MetaMaskButton');
     this.sendEthButton = document.querySelector('#MMsendToAddress');
     this.swapAvaxButton = document.querySelector('#MMswap');
     this.account = undefined;
@@ -18,10 +27,26 @@ class MetaMask {
       console.log('MetaMask is installed');
       this.setupConnect();
       this.setupSend();
-    }
+    } */
   }
 
-  metaMaskInstalled(){
+  /**
+   * Update accounts in MetaMask state
+   * @param {string[]} accounts - Array containing single account address string
+   */
+  updateAccounts = (accounts) => {
+    this.setState({accounts: accounts});
+  }
+
+  /**
+   * Update provider in MetaMask state
+   * @param {Object} provider - Web3Provider wrapper from window.ethereum
+   */
+  updateProvider = (provider) => {
+    this.setState({provider: provider});
+  }
+
+  /* metaMaskInstalled(){
     return typeof window.ethereum !== 'undefined' ? true : false;
   }
 
@@ -92,15 +117,45 @@ class MetaMask {
         this.swapAvaxButton.innerHTML = 'Swap Avax';
       }
     }
-  }
+  } */
 
-
+  // Some test code for retrieving account balance
+  /* getBalance = async (provider, accounts) => {
+    if (provider !== null && accounts.length > 0) {
+      console.log("provider is not null");
+      
+      let balance = await provider.getBalance(accounts[0]);
+      console.log("Wei: ", balance.toString());
+      console.log("Ether: ", ethers.utils.formatEther(balance));
+      return balance;
+    } else {
+      console.log("provider is null");
+      return -1;
+    }
+  } */
 
   /**
-   * Render UIs for merchant and customer
-   * @returns Complete UIs for merchant and customer in JSX
+   * Render MetaMask UI
+   * @returns Complete MetaMask UI in JSX
    */
+  render() {
+    const { accounts, provider } = this.state;
 
-} // class MetaMask
+    return (
+      <section className="mw-100">
+        <OnboardingButton
+          updateAccounts={this.updateAccounts}
+          updateProvider={this.updateProvider}
+        />
+
+        <MetaMaskDisplay
+          accounts={accounts}
+          provider={provider}
+        />
+      </section>
+    );
+  }
+
+} // class MetaMask extends Component
 
 export default MetaMask;
