@@ -13,7 +13,7 @@ const MerchantPage = () => {
   return (
     <article className="cf h-100">
       {/* Wallet on left-hand side (page top for small screens) */}
-      <div className="fl w-100 w-25-l h5 h-100-l pa3">
+      <div className="fl w-100 w-25-l h-100 pa3">
         <MetaMask />
       </div>
 
