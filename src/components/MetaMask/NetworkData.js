@@ -1,5 +1,5 @@
 /**
- * NetworkData contains Avalance network data structures
+ * NetworkData contains Avalanche network data structures
  */
 const NetworkData = {
   AVAX_CCHAIN_MAINNET_PARAMS: {
