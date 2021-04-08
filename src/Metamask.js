@@ -55,8 +55,10 @@ class MetaMask {
   setupSend(){
     //Sending Ethereum to an address
     let myvalue = 0.05e18;
-    let mygasPrice = 470e9;
-    let mygas = 21000;
+    // not setting any price should let it set it to default values
+    // determined by network
+    //let mygasPrice = 225e9;
+    //let mygas = 21000;
     this.sendEthButton.addEventListener('click', () => {
       if(this.account !== undefined){
         window.ethereum
@@ -67,8 +69,8 @@ class MetaMask {
               from: this.account,
               to: '0x9a57d321084F5b1ac1fCB32230a83Df9EF0AB565',
               value: '0x'+myvalue.toString(16),
-              gasPrice: '0x'+mygasPrice.toString(16),
-              gas: '0x'+mygas.toString(16),
+              //gasPrice: '0x'+mygasPrice.toString(16),
+              //gas: '0x'+mygas.toString(16),
             },
           ],
         })
