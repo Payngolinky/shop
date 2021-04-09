@@ -4,6 +4,7 @@ import './index.css';
 import './MetaMask.css';
 import App from './App';
 import MetaMask from './Metamask'
+import Pangolin from './Pangolin'
 import reportWebVitals from './reportWebVitals';
 
 import 'tachyons';
@@ -17,6 +18,7 @@ ReactDOM.render(
 );
 
 const mm = new MetaMask();
+const png = new Pangolin(mm);
 
 
 // If you want to start measuring performance in your app, pass a function

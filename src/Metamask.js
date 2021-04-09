@@ -8,6 +8,7 @@ class MetaMask {
     console.log('MetaMask initializing...');
     this.ethereumButton = document.querySelector('#MetaMaskButton');
     this.sendEthButton = document.querySelector('#MMsendToAddress');
+    this.swapAvaxButton = document.querySelector('#MMswap');
     this.account = undefined;
     if(!this.metaMaskInstalled() && this.isMetaMask()){
       console.log('MetaMask is not installed!');
@@ -88,6 +89,7 @@ class MetaMask {
         this.account = accounts[0];
         this.ethereumButton.innerHTML = this.account;
         this.sendEthButton.innerHTML = 'Send Coins';
+        this.swapAvaxButton.innerHTML = 'Swap Avax';
       }
     }
   }
