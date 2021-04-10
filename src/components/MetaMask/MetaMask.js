@@ -119,21 +119,6 @@ class MetaMask extends Component {
     }
   } */
 
-  // Some test code for retrieving account balance
-  /* getBalance = async (provider, accounts) => {
-    if (provider !== null && accounts.length > 0) {
-      console.log("provider is not null");
-      
-      let balance = await provider.getBalance(accounts[0]);
-      console.log("Wei: ", balance.toString());
-      console.log("Ether: ", ethers.utils.formatEther(balance));
-      return balance;
-    } else {
-      console.log("provider is null");
-      return -1;
-    }
-  } */
-
   /**
    * Render MetaMask UI
    * @returns Complete MetaMask UI in JSX
