@@ -3,6 +3,7 @@ import Web3 from 'web3';
 /**
  * Connects Payngolinky dapp to (MetaMask) wallet. Code from truffle react box
  * @returns Wallet with accessible accounts
+ * @details THIS FILE IS CURRENTLY UNUSED BUT COULD BE USEFUL TO KEEP AROUND
  */
 const getWeb3 = () =>
   new Promise((resolve, reject) => {
