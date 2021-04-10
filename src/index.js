@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Pangolin from './Pangolin'
+
 import reportWebVitals from './reportWebVitals';
 
 import 'tachyons';
@@ -14,8 +14,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-const png = new Pangolin(mm);
 
 
 // If you want to start measuring performance in your app, pass a function
