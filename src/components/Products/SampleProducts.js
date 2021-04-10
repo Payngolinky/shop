@@ -4,11 +4,11 @@
 const SampleProducts = [
   {
     id: 1,
-    name: "SOL T-Shirt",
-    price: 0.697,
-    image_url: "https://ih1.redbubble.net/image.2202518381.7027/ssrco,slim_fit_t_shirt,two_model,101010:01c5ca27c6,front,square_three_quarter,300x300.jpg",
-    desc: "Solana My Retirement Plan t-shirt",
-    qty: 123
+    name: "AVAX T-Shirt",
+    price: 0.933,
+    image_url: "https://ih1.redbubble.net/image.2210792579.3669/ssrco,long_t_shirt,mens,fafafa:ca443f4786,front,square_three_quarter,x300-bg,f8f8f8.1.jpg",
+    desc: "Dabbing Easter bunny HODLing AVAX",
+    qty: 30
   },
   {
     id: 2,
@@ -36,11 +36,11 @@ const SampleProducts = [
   },
   {
     id: 5,
-    name: "AVAX T-Shirt",
-    price: 0.933,
-    image_url: "https://ih1.redbubble.net/image.2210792579.3669/ssrco,long_t_shirt,mens,fafafa:ca443f4786,front,square_three_quarter,x300-bg,f8f8f8.1.jpg",
-    desc: "Dabbing Easter bunny HODLing AVAX",
-    qty: 30
+    name: "SOL T-Shirt",
+    price: 0.697,
+    image_url: "https://ih1.redbubble.net/image.2202518381.7027/ssrco,slim_fit_t_shirt,two_model,101010:01c5ca27c6,front,square_three_quarter,300x300.jpg",
+    desc: "Solana My Retirement Plan t-shirt",
+    qty: 123
   },
   {
     id: 6,
