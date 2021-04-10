@@ -8,6 +8,7 @@ class MetaMask {
     console.log('MetaMask initializing...');
     this.ethereumButton = document.querySelector('#MetaMaskButton');
     this.sendEthButton = document.querySelector('#MMsendToAddress');
+    this.swapAvaxButton = document.querySelector('#MMswap');
     this.account = undefined;
     if(!this.metaMaskInstalled() && this.isMetaMask()){
       console.log('MetaMask is not installed!');
@@ -55,8 +56,10 @@ class MetaMask {
   setupSend(){
     //Sending Ethereum to an address
     let myvalue = 0.05e18;
-    let mygasPrice = 470e9;
-    let mygas = 21000;
+    // not setting any price should let it set it to default values
+    // determined by network
+    //let mygasPrice = 225e9;
+    //let mygas = 21000;
     this.sendEthButton.addEventListener('click', () => {
       if(this.account !== undefined){
         window.ethereum
@@ -67,8 +70,8 @@ class MetaMask {
               from: this.account,
               to: '0x9a57d321084F5b1ac1fCB32230a83Df9EF0AB565',
               value: '0x'+myvalue.toString(16),
-              gasPrice: '0x'+mygasPrice.toString(16),
-              gas: '0x'+mygas.toString(16),
+              //gasPrice: '0x'+mygasPrice.toString(16),
+              //gas: '0x'+mygas.toString(16),
             },
           ],
         })
@@ -86,6 +89,7 @@ class MetaMask {
         this.account = accounts[0];
         this.ethereumButton.innerHTML = this.account;
         this.sendEthButton.innerHTML = 'Send Coins';
+        this.swapAvaxButton.innerHTML = 'Swap Avax';
       }
     }
   }
