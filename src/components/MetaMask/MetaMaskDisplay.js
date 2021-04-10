@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import NetworkData from './NetworkData';
 import TokenBalanceList from '../TokenBalance/TokenBalanceList';
@@ -29,47 +29,46 @@ const MetaMaskDisplay = ({ accounts, provider }) => {
 
   /**
    * Get chainName (optional) and chainId as a string
-   * @param {Object} web3Provider - Web3Provider provider wrapper
-   * @returns Resolved Promise string containing chainName/chainId
    */
-  const getChainData = async (web3Provider) => {
-    if (web3Provider === null) {
-      // If web3Provider is null, return Unavailable
-      return "Unavailable";
+  const getChainData = useCallback(async () => {
+    if (provider === null) {
+      // If web3Provider is null, default to Unavailable
+      return;
     }
 
     try {
       // This took a long time to figure out, need to use ".provider.request"
       // https://docs.ethers.io/v5/api/providers/other/#Web3Provider
-      const chainId = await web3Provider.provider.request({
+      const chainId = await provider.provider.request({
         method: 'eth_chainId'
       });
 
+      // Create variable to store chainId and/or chainName
+      let newChainData;
+
       if (chainId === NetworkData.AVAX_CCHAIN_TESTNET_PARAMS.chainId) {
-        // Return Avalanche testnet chainName and chainId
-        return NetworkData.AVAX_CCHAIN_TESTNET_PARAMS.chainName
+        // Combine Avalanche testnet chainName and chainId
+        newChainData = NetworkData.AVAX_CCHAIN_TESTNET_PARAMS.chainName
           + ", " + NetworkData.AVAX_CCHAIN_TESTNET_PARAMS.chainId;
       } else if (chainId === NetworkData.AVAX_CCHAIN_MAINNET_PARAMS.chainId) {
-        // Return Avalanche mainnet chainName and chainId
-        return NetworkData.AVAX_CCHAIN_MAINNET_PARAMS.chainName
+        // Combine Avalanche mainnet chainName and chainId
+        newChainData = NetworkData.AVAX_CCHAIN_MAINNET_PARAMS.chainName
           + ", " + NetworkData.AVAX_CCHAIN_MAINNET_PARAMS.chainId;
       } else {
-        // Otherwise, just return chainId
-        return chainId;
+        // Otherwise, just use chainId
+        newChainData = chainId;
+      }
+
+      // If chain data changed, update state
+      if (newChainData !== chainData) {
+        setChainData(newChainData);
       }
     } catch (error) {
       console.error(error);
-      return "Unavailable";
     }
-  } // const getChainData = ...
+  }, [chainData, provider]);
 
-  // getChainData returns a resolved Promise object, which React can't render
-  // Need to call useEffect to set chainData state
-  useEffect(() => {
-    getChainData(provider)
-      .then(promise_val => { setChainData(promise_val); })
-      .catch(console.error);
-  }, [provider]);
+  useEffect(() => { getChainData(); }, [getChainData]);
 
   return (
     <section className="mw-100">
@@ -82,7 +81,7 @@ const MetaMaskDisplay = ({ accounts, provider }) => {
 
         {/* Display account/wallet address */}
         <li className="pa1 pa2-ns bb b--black-10">
-          <b className="db f3 mb1 tc">Address</b>
+          <b className="db f3 mb1 tc">Account Address</b>
           <span className="f5 db lh-copy tc">
             { getShortAddress(accounts) }
           </span>
