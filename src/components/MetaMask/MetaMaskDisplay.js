@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import NetworkData from './NetworkData';
+import TokenBalanceList from '../TokenBalance/TokenBalanceList';
 
 /**
  * Retrieve account address as a truncated string
@@ -74,20 +75,21 @@ const MetaMaskDisplay = ({ accounts, provider }) => {
     <section className="mw-100">
       <ul className="list pl0">
         {/* Display chain info */}
-        <li className="pa2 pa3-ns bb b--black-10">
+        <li className="pa1 pa2-ns bb b--black-10">
           <b className="db f3 mb1 tc">Chain</b>
           <span className="f5 db lh-copy tc">{ chainData }</span>
         </li>
 
         {/* Display account/wallet address */}
-        <li className="pa2 pa3-ns">
+        <li className="pa1 pa2-ns bb b--black-10">
           <b className="db f3 mb1 tc">Address</b>
           <span className="f5 db lh-copy tc">
             { getShortAddress(accounts) }
           </span>
         </li>
 
-        {/* TODO: List token balances and latest transactions */}
+        {/* Display token balances in wallet */}
+        <TokenBalanceList accounts={accounts} provider={provider} />
       </ul>
     </section>
   );
