@@ -13,8 +13,13 @@ const TokenData = [
     'chainId': '0xa869'
   },
   {
-    'symbol': 'ETH',
-    'address': '',
+    'symbol': 'WETH',
+    'address': '0xFE314b188135893A684EE997eDcb81823Ffb575B',
+    'chainId': '0xa869'
+  },
+  {
+    'symbol': 'USDT',
+    'address': '0xaeC89D2e476a57498b2FB661d3B6667C96BbC11a',
     'chainId': '0xa869'
   }
 ];
