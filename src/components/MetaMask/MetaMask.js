@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { OnboardingButton } from './OnboardingButton';
+import Pangolin from '../../Pangolin';
 import MetaMaskDisplay from './MetaMaskDisplay';
 
 class MetaMask extends Component {
@@ -132,6 +133,8 @@ class MetaMask extends Component {
           updateAccounts={this.updateAccounts}
           updateProvider={this.updateProvider}
         />
+
+        <Pangolin accounts={accounts} />
 
         <MetaMaskDisplay
           accounts={accounts}
