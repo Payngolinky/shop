@@ -35,6 +35,7 @@ class Pangolin extends Component {
     window.web3 = new Web3(window.ethereum);
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const LINK = new Token(ChainId.FUJI, window.web3.utils.toChecksumAddress('0x2f0708e5fb96fd1e9f21eabad06ee5f337586a02'), 18)
+    console.log(window.web3.utils.toChecksumAddress('0x2f0708e5fb96fd1e9f21eabad06ee5f337586a02'));
     let tokenA = LINK
     let tokenB = WAVAX[LINK.chainId]
     const address = Pair.getAddress(tokenA, tokenB, tokenA.chainId)
