@@ -1,12 +1,22 @@
-class MetaMask {
+import React, { Component } from 'react';
+
+import { OnboardingButton } from './OnboardingButton';
+import Pangolin from '../../Pangolin';
+import MetaMaskDisplay from './MetaMaskDisplay';
+
+class MetaMask extends Component {
   /**
    * Metamask constructor initializes state variables
    * @constructor
    */
-
   constructor() {
-    console.log('MetaMask initializing...');
-    this.ethereumButton = document.querySelector('#MetaMaskButton');
+    super();
+    this.state = {
+      accounts: [],
+      provider: null
+    }
+
+    /* this.ethereumButton = document.querySelector('#MetaMaskButton');
     this.sendEthButton = document.querySelector('#MMsendToAddress');
     this.swapAvaxButton = document.querySelector('#MMswap');
     this.account = undefined;
@@ -18,10 +28,26 @@ class MetaMask {
       console.log('MetaMask is installed');
       this.setupConnect();
       this.setupSend();
-    }
+    } */
   }
 
-  metaMaskInstalled(){
+  /**
+   * Update accounts in MetaMask state
+   * @param {string[]} accounts - Array containing single account address string
+   */
+  updateAccounts = (accounts) => {
+    this.setState({accounts: accounts});
+  }
+
+  /**
+   * Update provider in MetaMask state
+   * @param {Object} provider - Web3Provider wrapper from window.ethereum
+   */
+  updateProvider = (provider) => {
+    this.setState({provider: provider});
+  }
+
+  /* metaMaskInstalled(){
     return typeof window.ethereum !== 'undefined' ? true : false;
   }
 
@@ -92,15 +118,32 @@ class MetaMask {
         this.swapAvaxButton.innerHTML = 'Swap Avax';
       }
     }
-  }
-
-
+  } */
 
   /**
-   * Render UIs for merchant and customer
-   * @returns Complete UIs for merchant and customer in JSX
+   * Render MetaMask UI
+   * @returns Complete MetaMask UI in JSX
    */
+  render() {
+    const { accounts, provider } = this.state;
 
-} // class MetaMask
+    return (
+      <section className="mw-100">
+        <OnboardingButton
+          updateAccounts={this.updateAccounts}
+          updateProvider={this.updateProvider}
+        />
+
+        <Pangolin accounts={accounts} />
+
+        <MetaMaskDisplay
+          accounts={accounts}
+          provider={provider}
+        />
+      </section>
+    );
+  }
+
+} // class MetaMask extends Component
 
 export default MetaMask;
