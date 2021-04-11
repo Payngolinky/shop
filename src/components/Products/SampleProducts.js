@@ -6,7 +6,7 @@ const SampleProducts = [
     id: 1,
     name: "AVAX T-Shirt",
     price: 0.0100,
-    image_url: "https://ih1.redbubble.net/image.2210792579.3669/ssrco,long_t_shirt,mens,fafafa:ca443f4786,front,square_three_quarter,x300-bg,f8f8f8.1.jpg",
+    image_url: "https://ih1.redbubble.net/image.2210792579.3669/rco,womens_premium_t_shirt,womens,x500,fafafa:ca443f4786,front-c,40,0,300,300-bg,f8f8f8.jpg",
     desc: "Dabbing Easter bunny HODLing AVAX",
     qty: 30
   },
