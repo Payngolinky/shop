@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Footer from '../Footer/Footer';
+import MetaMaskCustomer from '../MetaMaskCustomer/MetaMaskCustomer';
 import ProductDescription from './ProductDescription';
 import ProductImageLayout from './ProductImageLayout';
 import SampleProducts from '../Products/SampleProducts';
@@ -24,6 +25,8 @@ const CustomerPage = () => {
         {/* Payment UI on right-hand side (page bottom for small screens) */}
         <div className="fl w-100 w-50-m w-25-l h-100 pa3">
           <ProductDescription product={product} />
+
+          <MetaMaskCustomer />
         </div>
       </article>
 
