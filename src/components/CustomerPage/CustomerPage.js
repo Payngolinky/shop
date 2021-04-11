@@ -27,7 +27,7 @@ const CustomerPage = ({ toAddress }) => {
         <div className="fl w-100 w-50-m w-25-l h-100 pa3">
           <ProductDescription product={product} />
 
-          <MetaMaskCustomer toAddress={toAddress} />
+          <MetaMaskCustomer toAddress={toAddress} product={product} />
         </div>
       </article>
 
