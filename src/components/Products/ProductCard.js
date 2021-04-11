@@ -4,7 +4,7 @@ import React from 'react';
  * Defines UI for a single product card
  * @param {number} id - Product ID
  * @param {string} name - Name of product
- * @param {number} price - Price of product (in AVAX)
+ * @param {number} price - Price of product (in ETH)
  * @param {string} image_url - Product image URL
  * @param {number} qty - Quantity of product available
  * @param {string} desc - Brief description of product
@@ -24,7 +24,7 @@ const ProductCard = ({id, name, price, image_url, qty, desc}) => {
             <h1 className="f5 f4-ns mv0">{name}</h1>
           </div>
           <div className="dtc tr">
-            <h2 className="f5 mv0">{Number(price).toFixed(3)} AVAX</h2>
+            <h2 className="f5 mv0">{Number(price).toFixed(4)} ETH</h2>
           </div>
         </div>
 

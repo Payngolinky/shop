@@ -3,6 +3,7 @@ import './App.css';
 
 import Navbar from './components/Navbar/Navbar';
 import MerchantPage from './components/MerchantPage/MerchantPage';
+import CustomerPage from './components/CustomerPage/CustomerPage';
 
 class App extends Component {
   /**
@@ -12,7 +13,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      route: 'merchant'
+      route: 'merchant',
+      toAddress: '' // Destination address for customer payment
     }
   }
 
@@ -22,6 +24,14 @@ class App extends Component {
    */
   onRouteChange = (route) => {
     this.setState({route: route});
+  }
+
+  /**
+   * Update the destination address for customer payment
+   * @param {string} address - Destination address for customer payment
+   */
+  updateToAddress = (address) => {
+    this.setState({toAddress: address});
   }
 
   /**
@@ -36,8 +46,8 @@ class App extends Component {
 
         {
           this.state.route === 'merchant'
-          ? <MerchantPage />
-          : <div></div>
+          ? <MerchantPage updateToAddress={this.updateToAddress} />
+          : <CustomerPage toAddress={this.state.toAddress} />
         }
       </div>
     );
