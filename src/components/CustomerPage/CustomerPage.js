@@ -11,9 +11,10 @@ const product = SampleProducts[0];
 
 /**
  * Defines customer UI containing product description and payment info
+ * @param {string} toAddress - Destination address for customer payment
  * @returns Customer UI in JSX
  */
-const CustomerPage = () => {
+const CustomerPage = ({ toAddress }) => {
   return (
     <div>
       <article className="cf h-100">
@@ -26,7 +27,7 @@ const CustomerPage = () => {
         <div className="fl w-100 w-50-m w-25-l h-100 pa3">
           <ProductDescription product={product} />
 
-          <MetaMaskCustomer />
+          <MetaMaskCustomer toAddress={toAddress} />
         </div>
       </article>
 
