@@ -70,7 +70,7 @@ class Pangolin extends Component {
         && this.props.accounts[0] !== this.state.account) {
       this.setState({
         account: this.props.accounts[0],
-        buttonText: 'Swap ' + ethers.utils.formatEther(this.amountIn) + ' AVAX'
+        buttonText: 'Swap WETH to USDT'
       });
     }
   }
