@@ -3,6 +3,7 @@ import './App.css';
 
 import Navbar from './components/Navbar/Navbar';
 import MerchantPage from './components/MerchantPage/MerchantPage';
+import CustomerPage from './components/CustomerPage/CustomerPage';
 
 class App extends Component {
   /**
@@ -37,7 +38,7 @@ class App extends Component {
         {
           this.state.route === 'merchant'
           ? <MerchantPage />
-          : <div></div>
+          : <CustomerPage />
         }
       </div>
     );
