@@ -101,7 +101,7 @@ class MetaMask extends Component {
             },
           ],
         })
-        .then((txHash) => console.log(txHash))
+        .then((txHash) => {console.log(txHash);})
         .catch((error) => console.error);
       }
     });
