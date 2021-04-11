@@ -19,6 +19,7 @@ class Pangolin extends Component {
     super(props);
     console.log('Pango initializing...');
     this.FujiRouter = '0x2D99ABD9008Dc933ff5c0CD271B88309593aB921';
+    this.amountIn = '100000000000000000'; // 0.1 WAVAX to swap
 
     // State containing account address string and text in swap button
     this.state = {
@@ -46,8 +47,7 @@ class Pangolin extends Component {
     // for example if top-level await is not an option
     //const pair = await Fetcher.fetchPairData(LINK, WAVAX[LINK.chainId])
     const route = new Route([pair], WAVAX[LINK.chainId])
-    const amountIn = '100000000000000000' // 0.1 WAVAX
-    const trade = new Trade(route, new TokenAmount(WAVAX[LINK.chainId], amountIn), TradeType.EXACT_INPUT)
+    const trade = new Trade(route, new TokenAmount(WAVAX[LINK.chainId], this.amountIn), TradeType.EXACT_INPUT)
     const slippageTolerance = new Percent('50', '10000') // 50 bips, or 0.50%
     const amountOutMin = trade.minimumAmountOut(slippageTolerance).raw // needs to be converted to e.g. hex
     const path = [WAVAX[LINK.chainId].address, LINK.address]
@@ -70,9 +70,9 @@ class Pangolin extends Component {
     console.log('allowance is ', allowance)
 
 
-    if(JSBI.lessThan(JSBI.BigInt(allowance),JSBI.BigInt(amountIn))){
+    if(JSBI.lessThan(JSBI.BigInt(allowance),JSBI.BigInt(this.amountIn))){
       console.log('not enough allowance!')
-      await myContract1.methods.approve(this.FujiRouter,amountIn).send();
+      await myContract1.methods.approve(this.FujiRouter,this.amountIn).send();
       console.log('allowed now')
     }
 
@@ -80,7 +80,7 @@ class Pangolin extends Component {
       from: this.state.account, // default from address
     });
     //['0xd00ae08403B9bbb9124bB305C09058E32C39A48c','0x2f0708e5fb96fd1e9f21eabad06ee5f337586a02']
-    await myContract.methods.swapExactAVAXForTokens(amountOutMin.toString(),path,to,deadline).send({value:amountIn});
+    await myContract.methods.swapExactAVAXForTokens(amountOutMin.toString(),path,to,deadline).send({value:this.amountIn});
     //myContract.swapExactAVAXForTokens.call(amountOut,this.state.account,this.state.account,1000);
   }
 
@@ -107,7 +107,7 @@ class Pangolin extends Component {
         && this.props.accounts[0] !== this.state.account) {
       this.setState({
         account: this.props.accounts[0],
-        buttonText: 'Swap AVAX'
+        buttonText: 'Swap ' + ethers.utils.formatEther(this.amountIn) + ' AVAX'
       });
     }
   }
