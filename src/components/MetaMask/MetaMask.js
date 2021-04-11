@@ -9,8 +9,8 @@ class MetaMask extends Component {
    * Metamask constructor initializes state variables
    * @constructor
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       accounts: [],
       provider: null
@@ -37,6 +37,11 @@ class MetaMask extends Component {
    */
   updateAccounts = (accounts) => {
     this.setState({accounts: accounts});
+
+    // Update state in root level App component
+    if (accounts !== undefined && accounts.length > 0) {
+      this.props.updateToAddress(accounts[0]);
+    }
   }
 
   /**
