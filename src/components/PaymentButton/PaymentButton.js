@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 
 // String constants for button text
 const OOS_TEXT = 'Product out-of-stock';
-const BUY_TEXT = 'Buy Now';
+const BUY_TEXT = 'Buy Now for ';
 
 /**
  * Defines customer-side payment button UI
@@ -28,7 +28,7 @@ const PaymentButton = ({ product, toAddress, accounts, provider }) => {
         && provider !== null) {
       // Payment destination address is valid AND customer has valid account
       // Thus, product can be purchased so enable button and update account
-      setButtonText(BUY_TEXT);
+      setButtonText(BUY_TEXT + Number(product.price).toFixed(4) + ' ETH');
       setDisabled(false);
       setAccount(accounts[0]);
       setSigner(provider.getSigner());
@@ -41,7 +41,7 @@ const PaymentButton = ({ product, toAddress, accounts, provider }) => {
         setDisabled(true);
       }
     }
-  }, [toAddress, accounts, provider, buttonText, isDisabled]);
+  }, [product, toAddress, accounts, provider, buttonText, isDisabled]);
 
   /**
    * Logic to send customer payment - only available if button enabled
