@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-import { ethers } from 'ethers'
+/* import { ethers } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { ChainId, Token, WAVAX, Fetcher, Trade, Route, TokenAmount, TradeType, Percent, Pair } from '@pangolindex/sdk'
 import IPangolinPair from '@pangolindex/exchange-contracts/artifacts/contracts/pangolin-core/PangolinPair.sol/PangolinPair.json'
 import IPangolinERC20 from '@pangolindex/exchange-contracts/artifacts/contracts/pangolin-core/PangolinERC20.sol/PangolinERC20.json'
 import { getNetwork } from '@ethersproject/networks'
 import { getDefaultProvider } from '@ethersproject/providers'
-import JSBI from 'jsbi';
+import JSBI from 'jsbi'; */
 
 class Pangolin extends Component {
   /**
