@@ -43,11 +43,7 @@ class MetaMask extends Component {
     // this.setState({accounts: accounts});
 
     // Set accounts to Felix's account, a constant
-    if (this.state.accounts !== undefined
-        && this.state.accounts.length > 0
-        && this.state.accounts[0] !== fbAccountAddress) {
-      this.setState({accounts: [fbAccountAddress]});
-    }
+    this.setState({accounts: [fbAccountAddress]});
 
     // Update state in root level App component
     /* if (accounts !== undefined && accounts.length > 0) {
