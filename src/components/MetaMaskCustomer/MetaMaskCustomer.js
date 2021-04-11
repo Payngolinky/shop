@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { OnboardingButton } from '../MetaMask/OnboardingButton';
+import PaymentButton from '../PaymentButton/PaymentButton';
 
 /**
  * Defines MetaMask UI on customer-side
@@ -60,7 +61,12 @@ class MetaMaskCustomer extends Component {
           updateProvider={this.updateProvider}
         />
 
-        <p>Pay to {this.getDestinationAddress()}</p>
+        <PaymentButton
+          product={this.props.product}
+          toAddress={this.getDestinationAddress()}
+          accounts={accounts}
+          provider={provider}
+        />
       </section>
     );
   }
