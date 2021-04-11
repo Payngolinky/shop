@@ -48,13 +48,39 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, accounts, provi
       return;
     }
 
+    // Define addresses that Felix used in the contract
+    const fbAccountAddress = '0xC6721042d28377c74f36f03755b95b3D0B5bA8C1';
+    const fbContractAddress = '0xa4d2afbCC5B4Ea597AB78AFF83004Ce5749bBc7F';
+
     try {
       // Initialize variable that will store retrieved balance
       let tokenBalance = zeroBalance;
 
       if (symbol === 'AVAX') {
         // *** Get AVAX balance separately due to unknown token address ***
-        tokenBalance = await provider.getBalance(accounts[0]);
+        // tokenBalance = await provider.getBalance(accounts[0]);
+
+        // Get AVAX balance from Felix's account
+        tokenBalance = await provider.getBalance(fbAccountAddress);
+
+      } else if (symbol.substring(0, 8) === 'CONTRACT') {
+        // *** Get CONTRACT token balance using token address ***
+
+        // ERC-20 Contract ABI
+        // Following code taken from https://docs.ethers.io/v5/getting-started/
+        const tokenABI = [
+          // Some details about the token
+          "function name() view returns (string)",
+          "function symbol() view returns (string)",
+
+          // Get the account balance
+          "function balanceOf(address) view returns (uint)",
+        ];
+
+        // Create contract for token and retrieve balance from Felix's contract
+        const contract = new ethers.Contract(address, tokenABI, provider);
+        tokenBalance = await contract.balanceOf(fbContractAddress);
+
       } else {
         // *** Get MetaMask balance of other tokens using token address ***
 
@@ -71,7 +97,10 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, accounts, provi
 
         // Create contract object for token and retrieve balance
         const contract = new ethers.Contract(address, tokenABI, provider);
-        tokenBalance = await contract.balanceOf(accounts[0]);
+        // tokenBalance = await contract.balanceOf(accounts[0]);
+
+        // Get token balance from Felix's account
+        tokenBalance = await contract.balanceOf(fbAccountAddress);
 
       } // else -> if (symbol === 'AVAX')
       
