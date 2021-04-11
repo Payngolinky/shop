@@ -10,8 +10,8 @@ class MetaMaskCustomer extends Component {
    * MetaMaskCustomer constructor initializes state variables
    * @constructor
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       accounts: [],
       provider: null
@@ -35,6 +35,19 @@ class MetaMaskCustomer extends Component {
   }
 
   /**
+   * Get destination address for customer payment
+   * @returns Destination address for customer payment
+   */
+  getDestinationAddress = () => {
+    // This is Jeff's Payngolinky wallet
+    // TODO: this.props.toAddress should ultimately be returned since
+    //       it is passed from the merchant-side to the customer-side
+    if (this.props.toAddress.length > 0) {
+      return '0x9833ba6f8816779506fCeB200b49bD78693e5Ca7';
+    }
+  }
+
+  /**
    * Render customer-side MetaMask UI
    */
   render() {
@@ -46,6 +59,8 @@ class MetaMaskCustomer extends Component {
           updateAccounts={this.updateAccounts}
           updateProvider={this.updateProvider}
         />
+
+        <p>Pay to {this.getDestinationAddress()}</p>
       </section>
     );
   }
