@@ -36,19 +36,6 @@ class MetaMaskCustomer extends Component {
   }
 
   /**
-   * Get destination address for customer payment
-   * @returns Destination address for customer payment
-   */
-  getDestinationAddress = () => {
-    // This is Jeff's Payngolinky wallet
-    // TODO: this.props.toAddress should ultimately be returned since
-    //       it is passed from the merchant-side to the customer-side
-    if (this.props.toAddress.length > 0) {
-      return '0x9833ba6f8816779506fCeB200b49bD78693e5Ca7';
-    }
-  }
-
-  /**
    * Render customer-side MetaMask UI
    */
   render() {
@@ -63,7 +50,7 @@ class MetaMaskCustomer extends Component {
 
         <PaymentButton
           product={this.props.product}
-          toAddress={this.getDestinationAddress()}
+          toAddress={this.props.toAddress}
           accounts={accounts}
           provider={provider}
         />
