@@ -26,11 +26,10 @@ const zeroBalance = stringWithPrecision();
  * @param {string} address - String containing token contract address
  * @param {string} balance - String containing token balance to display
  * @param {TokenBalance~updateBalance} updateBalance - Callback function to update token balance in parent component
- * @param {string[]} accounts - Array containing single account address string
  * @param {Object} provider - Web3Provider provider wrapper
  * @returns UI containing balance of a token in JSX
  */
-const TokenBalance = ({ symbol, address, balance, updateBalance, accounts, provider }) => {
+const TokenBalance = ({ symbol, address, balance, updateBalance, provider }) => {
   /**
    * Retrieve token balance and update states
    */
@@ -41,14 +40,12 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, accounts, provi
         (address.length === 0 && symbol !== 'AVAX') ||
         balance === undefined ||
         balance.length === 0 ||
-        accounts === undefined ||
-        accounts.length === 0 ||
         provider === null) {
       // Balance defaults to zero
       return;
     }
 
-    // Define addresses that Felix used in the contract
+    // Define addresses that Felix used
     const fbAccountAddress = '0xC6721042d28377c74f36f03755b95b3D0B5bA8C1';
     const fbContractAddress = '0xa4d2afbCC5B4Ea597AB78AFF83004Ce5749bBc7F';
 
@@ -114,7 +111,7 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, accounts, provi
       // Balance defaults to zero
       console.error(error);
     }
-  }, [symbol, address, balance, updateBalance, accounts, provider]);
+  }, [symbol, address, balance, updateBalance, provider]);
 
   useEffect(() => { evaluateBalance(); }, [evaluateBalance]);
 
