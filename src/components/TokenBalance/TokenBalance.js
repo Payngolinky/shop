@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ethers } from 'ethers';
 
@@ -24,12 +24,12 @@ const zeroBalance = stringWithPrecision();
  * Displays the balance of a token in MetaMask wallet
  * @param {string} symbol - String containing symbol of token
  * @param {string} address - String containing token contract address
- * @param {string} balance - String containing token balance to display
- * @param {TokenBalance~updateBalance} updateBalance - Callback function to update token balance in parent component
  * @param {Object} provider - Web3Provider provider wrapper
  * @returns UI containing balance of a token in JSX
  */
-const TokenBalance = ({ symbol, address, balance, updateBalance, provider }) => {
+const TokenBalance = ({ symbol, address, provider }) => {
+  const [currentBalance, setCurrentBalance] = useState(zeroBalance);
+
   /**
    * Retrieve token balance and update states
    */
@@ -38,8 +38,6 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, provider }) => 
         symbol.length === 0 ||
         address === undefined ||
         (address.length === 0 && symbol !== 'AVAX') ||
-        balance === undefined ||
-        balance.length === 0 ||
         provider === null) {
       // Balance defaults to zero
       return;
@@ -53,9 +51,19 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, provider }) => 
       // Initialize variable that will store retrieved balance
       let tokenBalance = zeroBalance;
 
+      // Define ERC-20 Contract ABI here since it is used twice below
+      // Following code taken from https://docs.ethers.io/v5/getting-started/
+      const tokenABI = [
+        // Some details about the token
+        "function name() view returns (string)",
+        "function symbol() view returns (string)",
+
+        // Get the account balance
+        "function balanceOf(address) view returns (uint)",
+      ];
+
       if (symbol === 'AVAX') {
         // *** Get AVAX balance separately due to unknown token address ***
-        // tokenBalance = await provider.getBalance(accounts[0]);
 
         // Get AVAX balance from Felix's account
         tokenBalance = await provider.getBalance(fbAccountAddress);
@@ -63,55 +71,30 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, provider }) => 
       } else if (symbol.substring(0, 8) === 'CONTRACT') {
         // *** Get CONTRACT token balance using token address ***
 
-        // ERC-20 Contract ABI
-        // Following code taken from https://docs.ethers.io/v5/getting-started/
-        const tokenABI = [
-          // Some details about the token
-          "function name() view returns (string)",
-          "function symbol() view returns (string)",
-
-          // Get the account balance
-          "function balanceOf(address) view returns (uint)",
-        ];
-
-        // Create contract for token and retrieve balance from Felix's contract
+        // Create contract for CONTRACT token and retrieve balance from Felix's contract address
         const contract = new ethers.Contract(address, tokenABI, provider);
         tokenBalance = await contract.balanceOf(fbContractAddress);
 
       } else {
         // *** Get MetaMask balance of other tokens using token address ***
 
-        // ERC-20 Contract ABI
-        // Following code taken from https://docs.ethers.io/v5/getting-started/
-        const tokenABI = [
-          // Some details about the token
-          "function name() view returns (string)",
-          "function symbol() view returns (string)",
-
-          // Get the account balance
-          "function balanceOf(address) view returns (uint)",
-        ];
-
-        // Create contract object for token and retrieve balance
+        // Create contract object for token and retrieve balance from Felix's account address
         const contract = new ethers.Contract(address, tokenABI, provider);
-        // tokenBalance = await contract.balanceOf(accounts[0]);
-
-        // Get token balance from Felix's account
         tokenBalance = await contract.balanceOf(fbAccountAddress);
 
       } // else -> if (symbol === 'AVAX')
-      
-      if (tokenBalance !== balance) {
-        // Balance has changed from previous state so update parent state
+
+      // Balance has changed from previous state so update state
+      if (tokenBalance !== currentBalance) {
         const balanceNum = Number(ethers.utils.formatEther(tokenBalance));
         const balanceStr = stringWithPrecision(balanceNum);
-        updateBalance(symbol, balanceStr);
+        setCurrentBalance(balanceStr);
       }
     } catch (error) {
       // Balance defaults to zero
       console.error(error);
     }
-  }, [symbol, address, balance, updateBalance, provider]);
+  }, [symbol, address, currentBalance, provider]);
 
   useEffect(() => { evaluateBalance(); }, [evaluateBalance]);
 
@@ -120,7 +103,7 @@ const TokenBalance = ({ symbol, address, balance, updateBalance, provider }) => 
       key={symbol}
       className="pa1 pa2-ns bb b--black-10">
       <b className="db f3 mb1 tc">
-        {balance}
+        {currentBalance}
       </b>
       <span className="f5 db lh-copy tc">
         {symbol}
