@@ -87,8 +87,8 @@ const MetaMaskDisplay = ({ accounts, provider }) => {
           </span>
         </li>
 
-        {/* Display token balances in wallet */}
-        <TokenBalanceList accounts={accounts} provider={provider} />
+        {/* Display token balances in Felix's wallet and contract */}
+        <TokenBalanceList provider={provider} />
       </ul>
     </section>
   );
