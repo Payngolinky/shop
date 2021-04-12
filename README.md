@@ -24,6 +24,8 @@ In the smart contract it is ensured that only the merchant can access the funds.
 shop page will purchase items and transfer WETH to the smart contract.
 ![Contract deployment and payments](./public/diagramstep1.png)
 
+In order to convert the received WETH in to stable USDT, the smart contract can interact with Pangolin
+to swap the tokens. Here, Chainlink ensures a fair price for the swap.
 While the merchant can initiate swaps and withdrawals at any time, they also setup a threshold
 amount of WETH at which the owner is allowed to initiate a swap. This feature is added as the merchant
 may not want to manually trigger the swaps to limit cryptocurrency exposure. In order to incentivize
@@ -36,6 +38,9 @@ For demonstration purposes this swap functionality is now allowed for any addres
 fixed merchant and owner addresses (that is if any WETH is available on the contract). To test the
 contract interactions, it is required to have WETH in the Metamask wallet to pay for the demo products.
 The WETH can be swapped for AVAX on the pangolin.exchange on the Fuji network with the token address: 0xFE314b188135893A684EE997eDcb81823Ffb575B.
+If the swap is blocked, this may be caused by WETH/USDT price on Pangolin being lower than reported by Chainlink.
+As both WETH and USDT (0xaeC89D2e476a57498b2FB661d3B6667C96BbC11a) are on the FUJI network, the price may is not being updated by arbitrageurs.
+In case for a swap being blocked, this can be fixed by swapping the appropriate amount of USDT for WETH to increase the WETH price.
 
 ## Project Installation
 
