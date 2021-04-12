@@ -18,11 +18,10 @@ TokenData.forEach(data => {
 
 /**
  * Displays the balances of selected tokens in MetaMask wallet
- * @param {string[]} accounts - Array containing single account address string
  * @param {Object} provider - Web3Provider provider wrapper
  * @returns Multiple TokenBalance UI elements, each displaying a token balance
  */
-const TokenBalanceList = ({ accounts, provider }) => {
+const TokenBalanceList = ({ provider }) => {
   // Balance strings of selected tokens in MetaMask Wallet
   const [tokenBalances, setTokenBalances] = useState(defaultBalances);
 
@@ -56,7 +55,6 @@ const TokenBalanceList = ({ accounts, provider }) => {
               address={data.address}
               balance={tokenBalances[data.symbol]}
               updateBalance={updateBalance}
-              accounts={accounts}
               provider={provider}
             />
           );
