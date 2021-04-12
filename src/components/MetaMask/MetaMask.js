@@ -35,21 +35,14 @@ class MetaMask extends Component {
    * Update accounts in MetaMask state
    * @param {string[]} accounts - Array containing single account address string
    */
-  updateAccounts = (_accounts) => {
-    // Define addresses that Felix used in the contract
-    const fbAccountAddress = '0xC6721042d28377c74f36f03755b95b3D0B5bA8C1';
+  updateAccounts = (accounts) => {
+    // Define address of contract Felix wrote for swapping on Pangolin
     const fbContractAddress = '0xa4d2afbCC5B4Ea597AB78AFF83004Ce5749bBc7F';
 
-    // this.setState({accounts: accounts});
-
-    // Set accounts to Felix's account, a constant
-    this.setState({accounts: [fbAccountAddress]});
+    // Update accounts state
+    this.setState({accounts: accounts});
 
     // Update state in root level App component
-    /* if (accounts !== undefined && accounts.length > 0) {
-      this.props.updateToAddress(accounts[0]);
-    } */
-
     // Customer needs to send payment to contract address, not merchant account
     this.props.updateToAddress(fbContractAddress);
   }
