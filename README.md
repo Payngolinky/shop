@@ -17,6 +17,26 @@ Payngolinky also offers a seamless payment experience for customers who are eage
 favorite cryptocurrencies. The popular browser wallet extension MetaMask is integrated, enabling 
 quick access to assets and security through signed transactions.
 
+# How does it work?
+
+The payments to the merchant are relayed through a smart contract deployed by us/the service provider. 
+In the smart contract it is ensured that only the merchant can access the funds. Customers on the merchant's
+shop page will purchase items and transfer WETH to the smart contract.
+![Contract deployment and payments](./public/diagramstep1.png)
+
+While the merchant can initiate swaps and withdrawals at any time, they also setup a threshold
+amount of WETH at which the owner is allowed to initiate a swap. This feature is added as the merchant
+may not want to manually trigger the swaps to limit cryptocurrency exposure. In order to incentivize
+an external party to realize a swap as soon as the threshold is met, the provider gets a reimbursement
+which is slightly higher than the gas fees. This way, the contract provider will make sure to initiate
+the swap as soon as the threshold is reached to maximize the number of times the fee is paid.
+![Managing risk by swapping the WETH balance into USDT](./public/diagramstep2.png)
+
+For demonstration purposes this swap functionality is now allowed for any address, not just for the
+fixed merchant and owner addresses (that is if any WETH is available on the contract). To test the
+contract interactions, it is required to have WETH in the Metamask wallet to pay for the demo products.
+The WETH can be swapped for AVAX on the pangolin.exchange on the Fuji network with the token address: 0xFE314b188135893A684EE997eDcb81823Ffb575B.
+
 ## Project Installation
 
 In a terminal, run:
